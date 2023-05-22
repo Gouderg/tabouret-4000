@@ -10,10 +10,8 @@ class State:
        self.currentBoundingBox = None
 
     def isTracking(self):
-        if self.currentBoundingBox != None:
-            return True
-        else:
-            return False
+        return self.currentBoundingBox != None
+
 
     def prepareToNextFrame(self):
         self.lastBoundingBox = self.currentBoundingBox
