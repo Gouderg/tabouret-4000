@@ -67,5 +67,6 @@ class FileWriter:
 # if __name__ == "__main__":
 #     f = FileWriter("data.txt")
 
-#     f.writeFile([1, 4, 9090909, 3])
+#     f.writeFile([1, 4, 9090909, 3, -4])
+#     f.writeFile([1, 4, 9090909, 3, -4])
 #     print(f.readFile())

@@ -6,9 +6,10 @@ from model import CustomModel
 from state import State
 from fileWriter import FileWriter
 from utils.general import strip_optimizer
+import cv2
 
 @torch.no_grad()
-def run(poseweights="yolov7-w6-pose.pt",device='cpu'):
+def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=False):
 
     camera = Camera()
     model = CustomModel(device, poseweights)
@@ -37,16 +38,32 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu'):
             if state.isTracking():
                 val1, val2 = state.calc()
                 fileW.writeFile([val1, val2])
-                # fileW.writeFile(str(val1) + " " + str(val2))
 
             state.prepareToNextFrame()
-            #print(results)
+            
+            if (show_output):
+                radius = 5
+                for elt in results:
+                    cv2.circle(orig_image, (int(elt["x_rs"]), int(elt["y_rs"])), radius, (0, 0, 255), -1)
+                    cv2.circle(orig_image, (int(elt["x_ls"]), int(elt["y_ls"])), radius, (0, 0, 255), -1)
+                    cv2.circle(orig_image, (int(elt["x_rh"]), int(elt["y_rh"])), radius, (0, 0, 255), -1)
+                    cv2.circle(orig_image, (int(elt["x_lh"]), int(elt["y_lh"])), radius, (0, 0, 255), -1)
+                
+                if state.lastBoundingBox != None:
+                    cv2.rectangle(orig_image, state.lastBoundingBox[0:2], state.lastBoundingBox[2:4], (0, 255, 0), 2)
+                
+                cv2.imshow("Render", orig_image)
+                k = cv2.waitKey(33)
+                if k==27: return # Esc key to stop
+
+                print(state.lastBoundingBox)
             
 
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--poseweights', nargs='+', type=str, default='weights/yolov7-w6-pose.pt', help='model path(s)')
     parser.add_argument('--device', type=str, default='cpu', help='cpu/0,1,2,3(gpu)')   #device arugments
+    parser.add_argument('--show_output', action=argparse.BooleanOptionalAction)
     opt = parser.parse_args()
     return opt
 
