@@ -36,7 +36,8 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu'):
 
             if state.isTracking():
                 val1, val2 = state.calc()
-                fileW.writeFile(str(val1) + " " + str(val2))
+                fileW.writeFile([val1, val2])
+                # fileW.writeFile(str(val1) + " " + str(val2))
 
             state.prepareToNextFrame()
             #print(results)
