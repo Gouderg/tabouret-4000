@@ -18,9 +18,40 @@ class State:
         self.currentBoundingBox = None
 
     def findHandSign(self, data):
+        found = []
+        print(" --- ")
+
         for person in data:
-            if person["y_lh"] < person["y_ls"] or person["y_rh"] < person["y_rs"]:
-                self.currentBoundingBox = person["bbox_c1"]
+            current_bbox = person["bbox_c1"]
+            print("bb : ", current_bbox)
+
+            if 5 < person["x_lh"] < 635 and 5 < person["x_rh"] < 635:
+                height = abs(current_bbox[1] - current_bbox[3])
+
+                print("left : ",int(person["y_lh"]), int(person["y_ls"]))
+                print("right : ", int(person["y_rh"]), int(person["y_rs"]))
+                # La main doit être levée assez haut, on considère que la distance entre la main et l'épaule doit au moins être
+                # de 20% la hauteur du corps.
+                # print("height : ", height, " left hand : ", person["y_lh"], "modified H : ", person["y_lh"] + 0.2*height, " shoulder : ", person["y_ls"])
+                if person["y_lh"] + 0.2*height < person["y_ls"] or person["y_rh"] + 0.2*height  < person["y_rs"]:
+                    print("C'est moi ! ")
+                    found.append(current_bbox)
+                    # print("found Hand ! ! ! ! ! ! ! ! ! ! ")
+                    # print(person["y_lh"], " ", person["y_ls"], " ", person["y_rh"], " ", person["y_rs"],)
+
+       
+        if len(found) > 0:
+            d = 1000
+            bbox_save = None
+            for bbox in found:
+                center = [(bbox[0] + bbox[2])/2, (bbox[1]+ bbox[3])/2]
+                distanceFromCenterScreen = abs(340 - center[0]) + abs(340 - center[1])
+
+                if(distanceFromCenterScreen < d):
+                    d = distanceFromCenterScreen
+                    bbox_save = bbox
+
+            self.currentBoundingBox = bbox_save
 
     def findCurrentBBox(self, data):
         if self.currentBoundingBox == None and self.lastBoundingBox != None:
@@ -29,9 +60,12 @@ class State:
 
             dataLen = len(data)
             if dataLen < 1:
-                self.currentBoundingBox = None
+                self.currentBoundingBox = self.lastBoundingBox
             elif dataLen == 1:
-                self.currentBoundingBox = data[0]["bbox_c1"]
+                if self.BBoxDistance(data[0]["bbox_c1"]) > 60:
+                    self.currentBoundingBox = None
+                else:
+                    self.currentBoundingBox = data[0]["bbox_c1"]
             else:
                 for person in data:
                     bbox = person["bbox_c1"]
@@ -42,8 +76,11 @@ class State:
                     elif d < closestValue:
                         closestValue = d
                         closestBBox = bbox
-
-            self.currentBoundingBox = closestBBox
+                if closestBBox != None:
+                    if self.BBoxDistance(closestBBox) > 60:
+                        self.currentBoundingBox = self.lastBoundingBox
+                    else:
+                        self.currentBoundingBox = closestBBox            
 
 
     def BBoxDistance(self, bbox):  
