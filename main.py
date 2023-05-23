@@ -49,11 +49,11 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
             if (show_output):
                 radius = 5
                 for (i, elt) in enumerate(results):
-                    cv2.circle(orig_image, (int(elt["x_rs"]), int(elt["y_rs"])), radius, colors[i%5], -1)
-                    cv2.circle(orig_image, (int(elt["x_ls"]), int(elt["y_ls"])), radius, colors[i%5], -1)
-                    cv2.circle(orig_image, (int(elt["x_rh"]), int(elt["y_rh"])), radius, colors[i%5], -1)
-                    cv2.circle(orig_image, (int(elt["x_lh"]), int(elt["y_lh"])), radius, colors[i%5], -1)
-                    cv2.rectangle(orig_image, elt["bbox_c1"][0:2], elt["bbox_c1"][2:4], colors[i%5], 2)
+                    cv2.circle(orig_image, (int(elt["x_rs"]), int(elt["y_rs"])), radius, colors[4], -1)
+                    cv2.circle(orig_image, (int(elt["x_ls"]), int(elt["y_ls"])), radius, colors[4], -1)
+                    cv2.circle(orig_image, (int(elt["x_rh"]), int(elt["y_rh"])), radius, colors[4], -1)
+                    cv2.circle(orig_image, (int(elt["x_lh"]), int(elt["y_lh"])), radius, colors[4], -1)
+                    # cv2.rectangle(orig_image, elt["bbox_c1"][0:2], elt["bbox_c1"][2:4], colors[i%5], 2)
 
                 if state.currentBoundingBox != None:
                     print("printed BBBBBBOX : ", state.currentBoundingBox)

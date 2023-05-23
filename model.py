@@ -46,6 +46,7 @@ class CustomModel:
         results = []
         steps = 3
         for _, pose in enumerate(output_data):  # detections per image
+            bboxes = pose[:, :6]  # bounding boxes
 
             if len(output_data):  #check if no pose
                 # for c in pose[:, 5].unique(): # Print results
@@ -55,6 +56,7 @@ class CustomModel:
                 for det_index, (*xyxy, conf, cls) in enumerate(reversed(pose[:,:6])): #loop over poses for drawing on frame
                     c = int(cls)  # integer class
                     kpts = pose[det_index, 6:]
+                    
                     label = f'{self.names[c]} {conf:.2f}'
 
 
@@ -75,7 +77,7 @@ class CustomModel:
                         'y_rh': kpts[steps * 9 + 1],
                         'x_lh': kpts[steps * 10],
                         'y_lh': kpts[steps * 10 + 1],
-                        'bbox_c1': [int(a) for a in xyxy],
+                        'bbox_c1': [int(a) for a in bboxes[det_index]],
                         'label': label
                     })
 
