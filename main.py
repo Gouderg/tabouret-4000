@@ -56,14 +56,14 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
                     # cv2.rectangle(orig_image, elt["bbox_c1"][0:2], elt["bbox_c1"][2:4], colors[i%5], 2)
 
                 if state.currentBoundingBox != None:
-                    print("printed BBBBBBOX : ", state.currentBoundingBox)
+                    # print("printed BBBBBBOX : ", state.currentBoundingBox)
                     cv2.rectangle(orig_image, state.currentBoundingBox[0:2], state.currentBoundingBox[2:4], (0, 255, 0), 2)
                 
                 cv2.imshow("Render", orig_image)
                 k = cv2.waitKey(33)
                 if k==27: return # Esc key to stop
 
-                print(state.currentBoundingBox)
+                # print(state.currentBoundingBox)
 
             state.prepareToNextFrame()
             
