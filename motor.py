@@ -29,7 +29,7 @@ class Wheel():
         self.pwm.ChangeDutyCycle(self.value_pwm)
     
     def sub(self):
-        self.value_pwm = min(self.value_pwm - 1, 30)
+        self.value_pwm = max(self.value_pwm - 1, 30)
         self.pwm.ChangeDutyCycle(self.value_pwm)
 
 
