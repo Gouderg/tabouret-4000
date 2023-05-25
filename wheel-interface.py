@@ -91,6 +91,11 @@ def main():
                 else:
                     pin_right_controller.set_UP()
 
+            if speed_left > 100:
+                speed_left = 100
+            if speed_right > 100:
+                speed_right = 100 
+                
             pwm_left_controller.run(speed_left)
             pwm_right_controller.run(speed_right)
 
