@@ -23,14 +23,77 @@ def main():
         lastElement = list[-1] # [val1(avancer / reculer), val2(gauche / droite)]
 
         if notTheSame(lastElement, lastSaved):
+            speed_left = 0
+            speed_right = 0
+            direction = 1
+
             if lastElement[0] == 0:
                 "stop"
             elif lastElement[0] > 0:
                 "avancer"
+                speed_left = 33*lastElement[0]
+                speed_right = 33*lastElement[0]
             else:
                 "reculer"
-
+                speed_left = abs(33*lastElement[0])
+                speed_right = abs(33*lastElement[0])
+                direction = 0
             
+
+            if lastElement[1] == 0:
+                "ahead"
+            elif lastElement[1] > 0:
+                "right"
+                if direction == 1:
+                    speed_left -= 15*lastElement[1]
+                    speed_right += 15*lastElement[1]
+                else:
+                    speed_left += 15*lastElement[1]
+                    speed_right -= 15*lastElement[1]
+            else:
+                "left"
+                if direction == 1:
+                    speed_left += abs(15*lastElement[1])
+                    speed_right -= abs(15*lastElement[1])
+                else:
+                    speed_left -= abs(15*lastElement[1])
+                    speed_right += abs(15*lastElement[1])
+
+            reverse_left = 0
+            reverse_right = 0
+
+            if speed_left < 0:
+                speed_left = 30 + abs(speed_left)
+                reverse_left = 1
+            if speed_right < 0:
+                speed_right = 30 + abs(speed_right)
+                reverse_right = 1
+            
+            if direction == 1:
+                if reverse_left == 1:
+                    pin_left_controller.set_DOWN()
+                else:
+                    pin_left_controller.set_UP()
+
+                if reverse_right == 1:
+                    pin_right_controller.set_UP()
+                else:
+                    pin_right_controller.set_DOWN()
+
+            else:
+                if reverse_left == 1:
+                    pin_left_controller.set_UP()
+                else:
+                    pin_left_controller.set_DOWN()
+
+                if reverse_right == 1:
+                    pin_right_controller.set_DOWN()
+                else:
+                    pin_right_controller.set_UP()
+
+            pwm_left_controller.run(speed_left)
+            pwm_right_controller.run(speed_right)
+
             lastSaved = lastElement
 
 
