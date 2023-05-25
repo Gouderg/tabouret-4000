@@ -59,6 +59,11 @@ def main():
                     speed_left -= abs(15*lastElement[1])
                     speed_right += abs(15*lastElement[1])
 
+            if lastElement[0] == 0 and (speed_left != 0 or speed_right != 0):
+                "stop"
+                speed_left *= 2
+                speed_right *= 2
+
             reverse_left = 0
             reverse_right = 0
 
@@ -95,7 +100,7 @@ def main():
                 speed_left = 100
             if speed_right > 100:
                 speed_right = 100 
-                
+
             pwm_left_controller.run(speed_left)
             pwm_right_controller.run(speed_right)
 
