@@ -36,7 +36,6 @@ class FileWriter:
         return fileContent
     
     def writeFile(self, lineToWrite):
-
         # Read the data from the file.
         fileContent = self.readFile()
 
@@ -55,10 +54,11 @@ class FileWriter:
 
         
         with open(self.path, "w") as file:
+            print("writing")
             for row in fileContent:
                 txtToWrite = ' '.join([str(b) for b in row]) + "\n"
                 file.write(txtToWrite)
-
+        
         # Remove the lock file.
         os.remove(self.verrou)
         

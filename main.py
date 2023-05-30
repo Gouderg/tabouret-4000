@@ -6,7 +6,7 @@ from model import CustomModel
 from state import State
 from fileWriter import FileWriter
 from utils.general import strip_optimizer
-import cv2
+# import cv2
 
 @torch.no_grad()
 def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
@@ -25,6 +25,7 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
         # Output queue will be used to get the rgb frames from the output defined above
         qRgb = deviceCamera.getOutputQueue(name="rgb", maxSize=4, blocking=False)
 
+        print("c'est parti !")
         while True:
             inRgb = qRgb.get()  # blocking call, will wait until a new data has arrived
 
@@ -39,30 +40,6 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
                 val1, val2 = state.calc()
                 fileW.writeFile([val1, val2])
 
-            colors = [
-                (0, 0, 255),
-                (0, 255, 255),
-                (255, 255, 0),
-                (255, 0, 255),
-                (255, 0, 0)
-            ]
-            if (show_output):
-                radius = 5
-                for (i, elt) in enumerate(results):
-                    cv2.circle(orig_image, (int(elt["x_rs"]), int(elt["y_rs"])), radius, colors[4], -1)
-                    cv2.circle(orig_image, (int(elt["x_ls"]), int(elt["y_ls"])), radius, colors[4], -1)
-                    cv2.circle(orig_image, (int(elt["x_rh"]), int(elt["y_rh"])), radius, colors[4], -1)
-                    cv2.circle(orig_image, (int(elt["x_lh"]), int(elt["y_lh"])), radius, colors[4], -1)
-                    # cv2.rectangle(orig_image, elt["bbox_c1"][0:2], elt["bbox_c1"][2:4], colors[i%5], 2)
-
-                if state.currentBoundingBox != None:
-                    # print("printed BBBBBBOX : ", state.currentBoundingBox)
-                    cv2.rectangle(orig_image, state.currentBoundingBox[0:2], state.currentBoundingBox[2:4], (0, 255, 0), 2)
-                
-                cv2.imshow("Render", orig_image)
-                k = cv2.waitKey(33)
-                if k==27: return # Esc key to stop
-
                 # print(state.currentBoundingBox)
 
             state.prepareToNextFrame()
@@ -74,7 +51,7 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--poseweights', nargs='+', type=str, default='weights/yolov7-w6-pose.pt', help='model path(s)')
     parser.add_argument('--device', type=str, default='0', help='cpu/0,1,2,3(gpu)')   #device arugments
-    parser.add_argument('--show_output', action=argparse.BooleanOptionalAction)
+    # parser.add_argument('--show_output', action=argparse.BooleanOptionalAction)
     opt = parser.parse_args()
     return opt
 
