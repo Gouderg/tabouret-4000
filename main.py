@@ -27,11 +27,15 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
 
         print("c'est parti !")
         while True:
+            print("startBoucle")
             inRgb = qRgb.get()  # blocking call, will wait until a new data has arrived
 
             orig_image = inRgb.getCvFrame() 
-            
+            print("image")
+
             results = model.predict(orig_image) # Prediction and return a list of dict with all information
+
+            print("result")
 
             state.findHandSign(results)
             state.findCurrentBBox(results)
@@ -41,6 +45,8 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
                 fileW.writeFile([val1, val2])
 
                 # print(state.currentBoundingBox)
+
+            print("ouais")
 
             state.prepareToNextFrame()
             
