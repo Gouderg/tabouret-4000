@@ -11,7 +11,6 @@ class PWM_CONTROLLER():
         # Pin Setup:
         # Board pin-numbering scheme
         
-        GPIO.setmode(GPIO.BOARD)
         # set pin as an output pin with optional initial state of HIGH
         GPIO.setup(self.output_pin, GPIO.OUT, initial=GPIO.HIGH)
         self.setup()
