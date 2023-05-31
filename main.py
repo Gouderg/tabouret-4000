@@ -46,7 +46,7 @@ def run(poseweights, device):
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--poseweights', nargs='+', type=str, default='weights/yolov8s-pose.pt', help='model path(s)')
+    parser.add_argument('--poseweights', nargs='+', type=str, default="yolov8s-pose.pt", help='model path(s)')
     parser.add_argument('--device', type=str, default='0', help='cpu/0,1,2,3(gpu)')   #device arugments
     # parser.add_argument('--show_output', action=argparse.BooleanOptionalAction)
     opt = parser.parse_args()
