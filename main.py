@@ -9,7 +9,7 @@ from utils.general import strip_optimizer
 import cv2
 
 @torch.no_grad()
-def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
+def run(poseweights, device, show_output):
 
     camera = Camera()
     model = CustomModel(device, poseweights)
@@ -72,7 +72,7 @@ def run(poseweights="yolov7-w6-pose.pt",device='cpu', show_output=True):
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--poseweights', nargs='+', type=str, default='weights/yolov7-w6-pose.pt', help='model path(s)')
+    parser.add_argument('--poseweights', nargs='+', type=str, default='weights/yolov8s-pose.pt', help='model path(s)')
     parser.add_argument('--device', type=str, default='0', help='cpu/0,1,2,3(gpu)')   #device arugments
     parser.add_argument('--show_output', action=argparse.BooleanOptionalAction)
     opt = parser.parse_args()
@@ -85,5 +85,4 @@ def main(opt):
 
 if __name__ == "__main__":
     opt = parse_opt()
-    strip_optimizer(opt.device,opt.poseweights)
     main(opt)

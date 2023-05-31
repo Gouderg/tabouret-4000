@@ -3,3 +3,6 @@ models/__pycache__/
 utils/__pycache__/
 weights/
 coucou
+!weights/yolov8n-pose.pt
+!weights/yolov8s-pose.pt
+!weights/yolov8m-pose.pt
