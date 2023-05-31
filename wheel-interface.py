@@ -2,6 +2,7 @@ from pwm import PWM_CONTROLLER
 from gpio import GPIO_CONTROLLER
 from fileWriter import FileWriter
 import time
+import Jetson.GPIO as GPIO
 
 pin_left = 7
 pin_right = 11
@@ -9,6 +10,8 @@ pwm_left = 33
 pwm_right = 32
 
 def main():
+    GPIO.setmode(GPIO.BOARD)
+
     pin_left_controller = GPIO_CONTROLLER(pin_left)
     pin_right_controller = GPIO_CONTROLLER(pin_right)
     #pin_left_controller.set_UP() # init Up
