@@ -11,7 +11,7 @@ pwm_right = 32
 def main():
     pin_left_controller = GPIO_CONTROLLER(pin_left)
     pin_right_controller = GPIO_CONTROLLER(pin_right)
-    pin_right_controller.set_UP() # init Up
+    pin_left_controller.set_UP() # init Up
     pwm_left_controller = PWM_CONTROLLER(pwm_left)
     pwm_right_controller = PWM_CONTROLLER(pwm_right)
     fileR = FileWriter("coucou")
