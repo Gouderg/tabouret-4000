@@ -1,6 +1,7 @@
 from pwm import PWM_CONTROLLER
 from gpio import GPIO_CONTROLLER
 from fileWriter import FileWriter
+import time
 
 pin_left = 7
 pin_right = 11
@@ -10,7 +11,7 @@ pwm_right = 33
 def main():
     pin_left_controller = GPIO_CONTROLLER(pin_left)
     pin_right_controller = GPIO_CONTROLLER(pin_right)
-    pin_right_controller.set_UP() # init Up
+    pin_left_controller.set_UP() # init Up
     pwm_left_controller = PWM_CONTROLLER(pwm_left)
     pwm_right_controller = PWM_CONTROLLER(pwm_right)
     fileR = FileWriter("coucou")
@@ -18,8 +19,9 @@ def main():
     lastSaved = None
     
     while(True):
+        time.sleep(0.4)
         list = fileR.readFile()
-
+        print(list)
         lastElement = list[-1] # [val1(avancer / reculer), val2(gauche / droite)]
 
         if notTheSame(lastElement, lastSaved):
