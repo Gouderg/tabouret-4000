@@ -8,7 +8,7 @@ class GPIO_CONTROLLER():
             raise Exception('PWM not supported on this board')
         pass
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(pin,GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(pin,GPIO.OUT, initial=GPIO.HIGH)
 
     def set_UP(self):
         GPIO.output(self.output_pin, GPIO.HIGH)
