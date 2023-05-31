@@ -1,14 +1,11 @@
-import torch
 import argparse
 import depthai as dai
 from camera import Camera
 from model import CustomModel
 from state import State
 from fileWriter import FileWriter
-from utils.general import strip_optimizer
 import cv2
 
-@torch.no_grad()
 def run(poseweights, device, show_output):
 
     camera = Camera()
