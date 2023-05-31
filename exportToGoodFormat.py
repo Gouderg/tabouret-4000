@@ -15,9 +15,15 @@ import blobconverter
 # Transforn .onnx to 
 
 
-from blobconverter import BlobConverter
+# from blobconverter import BlobConverter
 
-# Convert the ONNX model to TensorFlow SavedModel using BlobConverter
-bc = BlobConverter()
-bc.from_onnx('weights/yolov7-w6-pose2.onnx')
-bc.to_tensorflow('weights/')
+# # Convert the ONNX model to TensorFlow SavedModel using BlobConverter
+# bc = BlobConverter()
+# bc.from_onnx('weights/yolov7-w6-pose2.onnx')
+# bc.to_tensorflow('weights/')
+
+model_dict = torch.load("weights/yolov7-w6-pose.pt")
+
+model = model_dict['model']
+model.eval()
+torch.save(model.state_dict(), "weights/yolopose.pt")

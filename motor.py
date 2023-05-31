@@ -1,12 +1,12 @@
 import RPi.GPIO as GPIO
 import time
-import keyboard
+from sshkeyboard import listen_keyboard, stop_listening
 
-POL_LEFT = 11
-PWM_LEFT = 32
+POL_LEFT = 7
+PWM_LEFT = 33
 
-POL_RIGHT = 7
-PWM_RIGHT = 33
+POL_RIGHT = 11
+PWM_RIGHT = 32
 
 class Wheel():
 
@@ -14,7 +14,8 @@ class Wheel():
         self.pin_pol = pol
         self.pin_pwm = pwm
         self.direction = direction
-        self.pwm, self.value_pwm = None, 50
+        self.pwm = None 
+        self.value_pwm = 70
 
     def setup(self):
         GPIO.setup(self.pin_pwm, GPIO.OUT)
@@ -25,11 +26,11 @@ class Wheel():
         self.pwm.start(self.value_pwm)
 
     def add(self):
-        self.value_pwm = min(self.value_pwm + 1, 99)
+        self.value_pwm = min(self.value_pwm + 10, 99)
         self.pwm.ChangeDutyCycle(self.value_pwm)
     
     def sub(self):
-        self.value_pwm = max(self.value_pwm - 1, 30)
+        self.value_pwm = max(self.value_pwm - 10, 30)
         self.pwm.ChangeDutyCycle(self.value_pwm)
 
 
@@ -42,24 +43,30 @@ class Robot():
     def setupAndLaunch(self):
         self.wheel_left.setup()
         self.wheel_right.setup()
-        time.sleep(1)
+        time.sleep(0.5)
         self.wheel_left.launch()
         self.wheel_right.launch()
 
+    def listener(self, e):
+        if (e == "i"): self.forward()
+        if (e == "j"): self.left()
+        if (e == "k"): self.backward()
+        if (e == "l"): self.right()
 
-    def forward(self, e):
+
+    def forward(self):
         self.wheel_left.add()
         self.wheel_right.add()
 
-    def backward(self, e):
+    def backward(self):
         self.wheel_left.sub()
         self.wheel_right.sub()
 
-    def left(self, e):
+    def left(self):
         self.wheel_left.sub()
         self.wheel_right.add()
 
-    def right(self, e):
+    def right(self):
         self.wheel_left.add()
         self.wheel_right.sub()
     
@@ -75,11 +82,8 @@ if __name__ == "__main__":
     robot = Robot()
 
     robot.setupAndLaunch()
-
-    keyboard.on_press_key("i", robot.forward)
-    keyboard.on_press_key("j", robot.left)
-    keyboard.on_press_key("k", robot.backward)
-    keyboard.on_press_key("l", robot.right)
+    time.sleep(1)
+    listen_keyboard(on_press=robot.listener, sequential=True)
 
     try:
         while True:
