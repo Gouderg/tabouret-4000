@@ -27,7 +27,7 @@ class PWM_CONTROLLER():
             self.p.ChangeDutyCycle(self.consigne)
             
     def setup(self):
-        self.p = GPIO.PWM(self.output_pin, 20)
+        self.p = GPIO.PWM(self.output_pin, 30)
         self.p.start(0)
         print("Setup GPIO terminé\n")
 
