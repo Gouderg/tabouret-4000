@@ -81,25 +81,25 @@ def main():
             
             if direction == 1:
                 if reverse_left == 1:
-                    pin_left_controller.set_DOWN()
-                else:
                     pin_left_controller.set_UP()
+                else:
+                    pin_left_controller.set_DOWN()
 
                 if reverse_right == 1:
-                    pin_right_controller.set_UP()
-                else:
                     pin_right_controller.set_DOWN()
+                else:
+                    pin_right_controller.set_UP()
 
             else:
                 if reverse_left == 1:
-                    pin_left_controller.set_UP()
-                else:
                     pin_left_controller.set_DOWN()
+                else:
+                    pin_left_controller.set_UP()
 
                 if reverse_right == 1:
-                    pin_right_controller.set_DOWN()
-                else:
                     pin_right_controller.set_UP()
+                else:
+                    pin_right_controller.set_DOWN()
 
             if speed_left > 100:
                 speed_left = 100
