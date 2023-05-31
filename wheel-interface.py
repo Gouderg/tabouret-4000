@@ -5,13 +5,13 @@ import time
 
 pin_left = 7
 pin_right = 11
-pwm_left = 32
-pwm_right = 33
+pwm_left = 33
+pwm_right = 32
 
 def main():
     pin_left_controller = GPIO_CONTROLLER(pin_left)
     pin_right_controller = GPIO_CONTROLLER(pin_right)
-    pin_left_controller.set_UP() # init Up
+    pin_right_controller.set_UP() # init Up
     pwm_left_controller = PWM_CONTROLLER(pwm_left)
     pwm_right_controller = PWM_CONTROLLER(pwm_right)
     fileR = FileWriter("coucou")
