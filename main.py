@@ -13,6 +13,8 @@ def run(poseweights, device):
     fileW = FileWriter("coucou")
     state = State()
 
+    fileW.clean()
+
     # Connect to device and start pipeline
     with dai.Device(camera.pipeline) as deviceCamera:
          

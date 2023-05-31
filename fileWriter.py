@@ -6,6 +6,10 @@ class FileWriter:
     def __init__(self, path):
         self.path = path
         self.verrou = ".verrou"
+    
+    def clean(self):
+        if os.path.isfile(self.path):
+            os.remove(self.path)
 
     def readFile(self):
         fileContent = []
