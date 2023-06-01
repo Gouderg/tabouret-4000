@@ -38,7 +38,7 @@ def main():
                     speed_left = 20 + abs(15*lastElement[0])
                     speed_right = 20 + abs(15*lastElement[0])
 
-                    direction = 0 if lastElement[0] < 0 else 1
+                    direction = 1 if lastElement[0] < 0 else 0
 
                 elif lastElement[1] < 0 or (lastElement[1] > 0 and direction == 0):
                     "gauche"
