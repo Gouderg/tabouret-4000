@@ -37,12 +37,12 @@ def main():
                     "stop"
                 elif lastElement[0] > 0:
                     "avancer"
-                    speed_left = 33*lastElement[0]
-                    speed_right = 33*lastElement[0]
+                    speed_left = 25*lastElement[0]
+                    speed_right = 25*lastElement[0]
                 else:
                     "reculer"
-                    speed_left = abs(33*lastElement[0])
-                    speed_right = abs(33*lastElement[0])
+                    speed_left = abs(25*lastElement[0])
+                    speed_right = abs(25*lastElement[0])
                     direction = 0
                 
 
@@ -51,19 +51,19 @@ def main():
                 elif lastElement[1] > 0:
                     "right"
                     if direction == 1:
-                        speed_left -= 15*lastElement[1]
-                        speed_right += 15*lastElement[1]
+                        speed_left -= 10*lastElement[1]
+                        speed_right += 10*lastElement[1]
                     else:
-                        speed_left += 15*lastElement[1]
-                        speed_right -= 15*lastElement[1]
+                        speed_left += 10*lastElement[1]
+                        speed_right -= 10*lastElement[1]
                 else:
                     "left"
                     if direction == 1:
-                        speed_left += abs(15*lastElement[1])
-                        speed_right -= abs(15*lastElement[1])
+                        speed_left += abs(10*lastElement[1])
+                        speed_right -= abs(10*lastElement[1])
                     else:
-                        speed_left -= abs(15*lastElement[1])
-                        speed_right += abs(15*lastElement[1])
+                        speed_left -= abs(10*lastElement[1])
+                        speed_right += abs(10*lastElement[1])
 
                 if lastElement[0] == 0 and (speed_left != 0 or speed_right != 0):
                     "stop"

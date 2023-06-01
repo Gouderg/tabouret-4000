@@ -10,6 +10,8 @@ class FileWriter:
     def clean(self):
         if os.path.isfile(self.path):
             os.remove(self.path)
+        if os.path.isfile(self.verrou):
+            os.remove(self.verrou)
 
     def readFile(self):
         fileContent = []
