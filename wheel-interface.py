@@ -31,7 +31,7 @@ def main():
             if notTheSame(lastElement, lastSaved):
                 speed_left = 0
                 speed_right = 0
-                direction = 1
+                direction = 0 # 1 = on inverse la direction
 
                 if lastElement[1] == 0:
 
@@ -48,7 +48,7 @@ def main():
                     "droite"
                     speed_left = 0
                     speed_right = 20 + abs(10*lastElement[1])
-                    
+
 
                 if direction == 0:
                     pin_left_controller.set_DOWN()
