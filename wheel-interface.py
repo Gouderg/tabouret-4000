@@ -35,19 +35,19 @@ def main():
 
                 if lastElement[1] == 0:
 
-                    speed_left = 20 + abs(15*lastElement[0])
-                    speed_right = 20 + abs(15*lastElement[0])
+                    speed_left = 20 + abs(10*lastElement[0])
+                    speed_right = 20 + abs(10*lastElement[0])
 
                     direction = 1 if lastElement[0] < 0 else 0
 
                 elif lastElement[1] < 0 or (lastElement[1] > 0 and direction == 0):
                     "gauche"
-                    speed_left = 20 + abs(15*lastElement[0])
+                    speed_left = 20 + abs(10*lastElement[1])
                     speed_right = 0
                 else:
                     "droite"
                     speed_left = 0
-                    speed_right = 20 + abs(15*lastElement[0])
+                    speed_right = 20 + abs(10*lastElement[1])
 
                 if direction == 0:
                     pin_left_controller.set_DOWN()
