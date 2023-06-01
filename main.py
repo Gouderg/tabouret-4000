@@ -62,7 +62,7 @@ def run(poseweights, device, save_output):
                         cv2.rectangle(orig_image, elt["bbox_c1"][0:2], elt["bbox_c1"][2:4], colors[i%5], 2)
                     
                     heure_str = datetime.now().strftime("%Y%m%d_%H:%M:%S")
-                    cv2.imwrite("img/{}_{}".format(heure_str, cpt), orig_image)
+                    cv2.imwrite("img/{}_{}.png".format(heure_str, cpt), orig_image)
                     cpt += 1
 
             else:
