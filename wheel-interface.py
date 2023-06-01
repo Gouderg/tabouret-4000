@@ -22,7 +22,7 @@ def main():
     lastSaved = None
     
     while(True):
-        time.sleep(0.1)
+        time.sleep(0.2)
         list = fileR.readFile()
         if len(list) > 0:
             print(list)
