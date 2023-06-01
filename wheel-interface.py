@@ -49,6 +49,9 @@ def main():
                     speed_left = 0
                     speed_right = 20 + abs(10*lastElement[1])
 
+                if lastElement[1] != 0:
+                    direction = 1 if lastElement[1] < 0 else 0
+
                 if direction == 0:
                     pin_left_controller.set_DOWN()
                     pin_right_controller.set_UP()
