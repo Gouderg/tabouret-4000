@@ -57,8 +57,8 @@ class State:
                 self.currentBoundingBox = self.lastBoundingBox
             elif dataLen == 1:
                 if self.BBoxDistance(data[0]["bbox_c1"]) > 60:
-                    # self.currentBoundingBox = None
-                    self.currentBoundingBox = data[0]["bbox_c1"]
+                    self.currentBoundingBox = None
+                    # self.currentBoundingBox = data[0]["bbox_c1"]
                 else:
                     self.currentBoundingBox = data[0]["bbox_c1"]
             else:
@@ -73,8 +73,8 @@ class State:
                         closestBBox = bbox
                 if closestBBox != None:
                     if self.BBoxDistance(closestBBox) > 60:
-                        # self.currentBoundingBox = self.lastBoundingBox
-                        self.currentBoundingBox = closestBBox
+                        self.currentBoundingBox = self.lastBoundingBox
+                        # self.currentBoundingBox = closestBBox
                     else:
                         self.currentBoundingBox = closestBBox            
 

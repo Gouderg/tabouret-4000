@@ -24,7 +24,6 @@ def run(poseweights, device):
         # Output queue will be used to get the rgb frames from the output defined above
         qRgb = deviceCamera.getOutputQueue(name="rgb", maxSize=4, blocking=False)
 
-        print("c'est parti !")
         while True:
             start = time.time()
             inRgb = qRgb.get()  # blocking call, will wait until a new data has arrived
@@ -33,14 +32,14 @@ def run(poseweights, device):
 
             results = model.predict(orig_image) # Prediction and return a list of dict with all information
 
-            print("result")
-
             state.findHandSign(results)
             state.findCurrentBBox(results)
 
             if state.isTracking():
                 val1, val2 = state.calc()
                 fileW.writeFile([val1, val2])
+            else:
+                fileW.writeFile([0, 0])
 
             state.prepareToNextFrame()
             end = time.time()
