@@ -51,7 +51,7 @@ def run(poseweights, device, save_output):
             if state.isTracking():
                 val1, val2 = state.calc()
                 fileW.writeFile([val1, val2])
-
+                print("tracking")
                 if save_output:
                     radius = 5
                     for (i, elt) in enumerate(results):

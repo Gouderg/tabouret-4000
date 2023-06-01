@@ -9,7 +9,7 @@ class CustomModel:
 
     def predict(self, frame):
 
-        results = self.model.predict(show=False, source=frame, device=self.device)[0]
+        results = self.model.predict(show=False, source=frame, device=self.device, stream=False)[0]
         data = []
         if len(results.keypoints) > 0:
             for idx, keyspoints in enumerate(results.keypoints):

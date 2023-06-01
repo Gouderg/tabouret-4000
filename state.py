@@ -121,9 +121,9 @@ class State:
             val1 = -1
         elif abs(height - camHeight) < 0.4  * camHeight:
             val1 = 0
-        elif abs(height - camHeight) < 0.5  * camHeight:
+        elif abs(height - camHeight) < 0.6  * camHeight:
             val1 = 1
-        elif abs(height - camHeight) < 0.6  * camHeight:  
+        elif abs(height - camHeight) < 0.7  * camHeight:  
             val1 = 2
         else: 
             val1 = 3
