@@ -76,8 +76,8 @@ class Robot():
         self.wheel_right.sub()
     
     def stop(self):
-        self.wheel_left.stop()
-        self.wheel_right.stop()
+        self.wheel_left.arret()
+        self.wheel_right.arret()
 
     def clean(self):
         self.wheel_left.pwm.stop()
