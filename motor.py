@@ -33,6 +33,16 @@ class Wheel():
         self.value_pwm = max(self.value_pwm - 10, 30)
         self.pwm.ChangeDutyCycle(self.value_pwm)
     
+    def forward(self):
+        self.value_pwm = 50
+        GPIO.output(self.pin_pol, self.direction)
+        self.pwm.ChangeDutyCycle(self.value_pwm)
+    
+    def backward(self):
+        self.value_pwm = 50
+        GPIO.output(self.pin_pol, 1 if self.direction == 0 else 0)
+        self.pwm.ChangeDutyCycle(self.value_pwm)
+
     def arret(self):
         self.value_pwm = 20
         self.pwm.ChangeDutyCycle(self.value_pwm)
@@ -58,23 +68,61 @@ class Robot():
         if (e == "l"): self.right()
         if (e == "o"): self.stop()
 
+        if (e == "w"): self.forward_auto()
+        if (e == "s"): self.left_auto()
+        if (e == "a"): self.backward_auto()
+        if (e == "d"): self.right_auto()
+
 
     def forward(self):
-        self.wheel_left.add()
-        self.wheel_right.add()
+        self.wheel_left.forward()
+        self.wheel_right.forward()
+        time.sleep(0.3)
+        self.stop()
+
+        # self.wheel_left.add()
+        # self.wheel_right.add()
 
     def backward(self):
+        self.wheel_left.backward()
+        self.wheel_right.backward()
+        time.sleep(0.3)
+        self.stop()
+        # self.wheel_left.sub()
+        # self.wheel_right.sub()
+
+    def left(self):
+        self.wheel_left.backward()
+        self.wheel_right.forward()
+        time.sleep(0.2)
+        self.stop()
+        # self.wheel_left.sub()
+        # self.wheel_right.add()
+
+    def right(self):
+        self.wheel_left.forward()
+        self.wheel_right.backward()
+        time.sleep(0.2)
+        self.stop()
+        # self.wheel_left.add()
+        # self.wheel_right.sub()
+
+    def forward_auto(self):
+        self.wheel_left.add()
+        self.wheel_right.add()
+
+    def backward_uato(self):
         self.wheel_left.sub()
         self.wheel_right.sub()
 
-    def left(self):
+    def left_auto(self):
         self.wheel_left.sub()
         self.wheel_right.add()
 
-    def right(self):
+    def right_auto(self):
         self.wheel_left.add()
         self.wheel_right.sub()
-    
+
     def stop(self):
         self.wheel_left.arret()
         self.wheel_right.arret()
@@ -96,7 +144,7 @@ if __name__ == "__main__":
 
     try:
         while True:
-            time.sleep(1)
+            time.sleep(0.4)
 
     finally:
         robot.clean()
