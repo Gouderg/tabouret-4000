@@ -78,6 +78,9 @@ def main():
                 blocking = False
                 blockLimit = 0
                 compteur = 0
+                
+                pwm_left_controller.run(0)
+                pwm_right_controller.run(0)
             else:
                 compteur += 1
 
