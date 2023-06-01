@@ -5,8 +5,19 @@ from model import CustomModel
 from state import State
 from fileWriter import FileWriter
 import time
+import cv2
+from datetime import datetime
 
-def run(poseweights, device):
+
+colors = [
+    (0, 0, 255),
+    (0, 255, 255),
+    (255, 255, 0),
+    (255, 0, 255),
+    (255, 0, 0)
+]
+
+def run(poseweights, device, save_output):
 
     camera = Camera()
     model = CustomModel(device, poseweights)
@@ -24,6 +35,8 @@ def run(poseweights, device):
         # Output queue will be used to get the rgb frames from the output defined above
         qRgb = deviceCamera.getOutputQueue(name="rgb", maxSize=4, blocking=False)
 
+        cpt = 0
+        
         while True:
             start = time.time()
             inRgb = qRgb.get()  # blocking call, will wait until a new data has arrived
@@ -38,6 +51,20 @@ def run(poseweights, device):
             if state.isTracking():
                 val1, val2 = state.calc()
                 fileW.writeFile([val1, val2])
+
+                if save_output:
+                    radius = 5
+                    for (i, elt) in enumerate(results):
+                        cv2.circle(orig_image, (int(elt["x_rs"]), int(elt["y_rs"])), radius, colors[i%5], -1)
+                        cv2.circle(orig_image, (int(elt["x_ls"]), int(elt["y_ls"])), radius, colors[i%5], -1)
+                        cv2.circle(orig_image, (int(elt["x_rh"]), int(elt["y_rh"])), radius, colors[i%5], -1)
+                        cv2.circle(orig_image, (int(elt["x_lh"]), int(elt["y_lh"])), radius, colors[i%5], -1)
+                        cv2.rectangle(orig_image, elt["bbox_c1"][0:2], elt["bbox_c1"][2:4], colors[i%5], 2)
+                    
+                    heure_str = datetime.now().strftime("%Y%m%d_%H:%M:%S")
+                    cv2.imwrite("img/{}_{}.png".format(heure_str, cpt), orig_image)
+                    cpt += 1
+
             else:
                 fileW.writeFile([0, 0])
 
@@ -52,6 +79,7 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--poseweights', nargs='+', type=str, default="yolov8n-pose.pt", help='model path(s)')
     parser.add_argument('--device', type=str, default='0', help='cpu/0,1,2,3(gpu)')   #device arugments
+    parser.add_argument('--save-output', action='store_true')
     # parser.add_argument('--show_output', action=argparse.BooleanOptionalAction)
     opt = parser.parse_args()
     return opt
