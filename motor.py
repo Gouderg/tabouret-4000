@@ -69,8 +69,8 @@ class Robot():
         if (e == "o"): self.stop()
 
         if (e == "w"): self.forward_auto()
-        if (e == "s"): self.left_auto()
-        if (e == "a"): self.backward_auto()
+        if (e == "a"): self.left_auto()
+        if (e == "s"): self.backward_auto()
         if (e == "d"): self.right_auto()
 
 
@@ -111,7 +111,7 @@ class Robot():
         self.wheel_left.add()
         self.wheel_right.add()
 
-    def backward_uato(self):
+    def backward_auto(self):
         self.wheel_left.sub()
         self.wheel_right.sub()
 
