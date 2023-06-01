@@ -15,7 +15,7 @@ class Wheel():
         self.pin_pwm = pwm
         self.direction = direction
         self.pwm = None 
-        self.value_pwm = 70
+        self.value_pwm = 20
 
     def setup(self):
         GPIO.setup(self.pin_pwm, GPIO.OUT)
@@ -31,6 +31,10 @@ class Wheel():
     
     def sub(self):
         self.value_pwm = max(self.value_pwm - 10, 30)
+        self.pwm.ChangeDutyCycle(self.value_pwm)
+    
+    def arret(self):
+        self.value_pwm = 20
         self.pwm.ChangeDutyCycle(self.value_pwm)
 
 
@@ -52,6 +56,7 @@ class Robot():
         if (e == "j"): self.left()
         if (e == "k"): self.backward()
         if (e == "l"): self.right()
+        if (e == "o"): self.stop()
 
 
     def forward(self):
@@ -70,6 +75,10 @@ class Robot():
         self.wheel_left.add()
         self.wheel_right.sub()
     
+    def stop(self):
+        self.wheel_left.stop()
+        self.wheel_right.stop()
+
     def clean(self):
         self.wheel_left.pwm.stop()
         self.wheel_right.pwm.stop()

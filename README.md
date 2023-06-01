@@ -80,3 +80,13 @@ python detect.py --weights ../models/pose/yolov7-w6-pose.pt --source 0 --img-siz
 
 
 => Faire une réduction en réduisant la taille de la main sur l'image
+
+
+
+
+
+
+###
+
+
+
