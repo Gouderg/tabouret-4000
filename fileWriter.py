@@ -37,7 +37,8 @@ class FileWriter:
                 fileContent.append(row)
 
         # Remove the lock file.
-        os.remove(self.verrou)
+        if os.path.isfile(self.verrou):
+            os.remove(self.verrou)
 
         return fileContent
     
@@ -66,7 +67,8 @@ class FileWriter:
                 file.write(txtToWrite)
         
         # Remove the lock file.
-        os.remove(self.verrou)
+        if os.path.isfile(self.verrou):
+            os.remove(self.verrou)
         
         return 1
 

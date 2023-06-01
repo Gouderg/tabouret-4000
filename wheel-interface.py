@@ -51,19 +51,19 @@ def main():
                 elif lastElement[1] > 0:
                     "right"
                     if direction == 1:
-                        speed_left -= 15*lastElement[1]
-                        speed_right += 15*lastElement[1]
-                    else:
                         speed_left += 15*lastElement[1]
                         speed_right -= 15*lastElement[1]
+                    else:
+                        speed_left -= 15*lastElement[1]
+                        speed_right += 15*lastElement[1]
                 else:
                     "left"
                     if direction == 1:
-                        speed_left += abs(15*lastElement[1])
-                        speed_right -= abs(15*lastElement[1])
-                    else:
                         speed_left -= abs(15*lastElement[1])
                         speed_right += abs(15*lastElement[1])
+                    else:
+                        speed_left += abs(15*lastElement[1])
+                        speed_right -= abs(15*lastElement[1])
 
                 if lastElement[0] == 0 and (speed_left != 0 or speed_right != 0):
                     "stop"
