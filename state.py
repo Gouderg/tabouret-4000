@@ -95,13 +95,18 @@ class State:
         val2 = 0
 
         if width < 0.8*camWidth:
-            if abs(center - camCenter) < 0.1*camWidth:
-                val2 = 0
             if abs(center - camCenter) < 0.2*camWidth:
+                val2 = 0
+            elif abs(center - camCenter) < 0.3*camWidth:
                 if center < camCenter:
                     val2 = -1
                 else:
                     val2 = 1
+            elif abs(center - camCenter) < 0.4*camWidth:
+                if center < camCenter:
+                    val2 = -2
+                else:
+                    val2 = 2
             else:
                 if center < camCenter:
                     val2 = -3
