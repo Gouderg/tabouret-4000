@@ -33,6 +33,34 @@ def main():
                 speed_right = 0
                 direction = 1
 
+                if lastElement[1] == 0:
+
+                    speed_left = 20 + abs(15*lastElement[0])
+                    speed_right = 20 + abs(15*lastElement[0])
+
+                    direction = 0 if lastElement[0] < 0 else 1
+
+                elif lastElement[1] < 0 or (lastElement[1] > 0 and direction == 0):
+                    "gauche"
+                    speed_left = 20 + abs(15*lastElement[0])
+                    speed_right = 0
+                else:
+                    "droite"
+                    speed_left = 0
+                    speed_right = 20 + abs(15*lastElement[0])
+
+                if direction == 0:
+                    pin_left_controller.set_DOWN()
+                    pin_right_controller.set_UP()
+                else:
+                    pin_left_controller.set_UP()
+                    pin_right_controller.set_DOWN()
+
+                pwm_left_controller.run(speed_left)
+                pwm_right_controller.run(speed_right)
+
+                lastSaved = lastElement
+                """
                 if lastElement[0] == 0:
                     "stop"
                 elif lastElement[0] > 0:
@@ -106,11 +134,12 @@ def main():
                     speed_left = 100
                 if speed_right > 100:
                     speed_right = 100 
-
+                
                 pwm_left_controller.run(speed_left)
                 pwm_right_controller.run(speed_right)
 
                 lastSaved = lastElement
+                """
 
 
 
