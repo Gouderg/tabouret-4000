@@ -80,8 +80,8 @@ def main():
                     blocking = False
                     blockLimit = 0
                     compteur = 0
-                    waiting = 4
-                    
+                    waiting = 3
+
                     pwm_left_controller.run(0)
                     pwm_right_controller.run(0)
                     lastSaved = None
