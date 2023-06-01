@@ -23,67 +23,72 @@ def main():
     compteur = 0
     blockLimit = 0
     blocking = False
+    waiting = 0
 
     while(True):
         time.sleep(0.2)
 
-        if blocking == False:
-            list = fileR.readFile()
-            if len(list) > 0:
-                print(list)
-                lastElement = list[-1] # [val1(avancer / reculer), val2(gauche / droite)]
+        if waiting == 0:
+            if blocking == False:
+                list = fileR.readFile()
+                if len(list) > 0:
+                    print(list)
+                    lastElement = list[-1] # [val1(avancer / reculer), val2(gauche / droite)]
 
-                if notTheSame(lastElement, lastSaved):
-                    speed_left = 0
-                    speed_right = 0
-                    direction = 0 # 1 = on inverse la direction
-
-                    if lastElement[1] == 0:
-
-                        speed_left = 20 + abs(10*lastElement[0])
-                        speed_right = 20 + abs(10*lastElement[0])
-
-                        direction = 1 if lastElement[0] < 0 else 0
-
-                    elif lastElement[1] < 0:
-                        "gauche"
-                        # speed_left = 20 + abs(10*lastElement[1])
-                        speed_left = 30
-                        speed_right = 0
-                        blockLimit = 2*lastElement[1]
-                        blocking = True
-
-                    else:
-                        "droite"
+                    if notTheSame(lastElement, lastSaved):
                         speed_left = 0
-                        # speed_right = 20 + abs(10*lastElement[1])
-                        speed_right = 30
-                        blockLimit = 2*lastElement[1]
-                        blocking = True
+                        speed_right = 0
+                        direction = 0 # 1 = on inverse la direction
+
+                        if lastElement[1] == 0:
+
+                            speed_left = 20 + abs(10*lastElement[0])
+                            speed_right = 20 + abs(10*lastElement[0])
+
+                            direction = 1 if lastElement[0] < 0 else 0
+
+                        elif lastElement[1] < 0:
+                            "gauche"
+                            # speed_left = 20 + abs(10*lastElement[1])
+                            speed_left = 30
+                            speed_right = 0
+                            blockLimit = 1 + 2*abs(lastElement[1])
+                            blocking = True
+
+                        else:
+                            "droite"
+                            speed_left = 0
+                            # speed_right = 20 + abs(10*lastElement[1])
+                            speed_right = 30
+                            blockLimit = 1 + 2*abs(lastElement[1])
+                            blocking = True
 
 
-                    if direction == 0:
-                        pin_left_controller.set_DOWN()
-                        pin_right_controller.set_UP()
-                    else:
-                        pin_left_controller.set_UP()
-                        pin_right_controller.set_DOWN()
+                        if direction == 0:
+                            pin_left_controller.set_DOWN()
+                            pin_right_controller.set_UP()
+                        else:
+                            pin_left_controller.set_UP()
+                            pin_right_controller.set_DOWN()
 
-                    pwm_left_controller.run(speed_left)
-                    pwm_right_controller.run(speed_right)
+                        pwm_left_controller.run(speed_left)
+                        pwm_right_controller.run(speed_right)
 
-                    lastSaved = lastElement
-        else:
-            if compteur == blockLimit:
-                blocking = False
-                blockLimit = 0
-                compteur = 0
-                
-                pwm_left_controller.run(0)
-                pwm_right_controller.run(0)
+                        lastSaved = lastElement
             else:
-                compteur += 1
-
+                if compteur == blockLimit:
+                    blocking = False
+                    blockLimit = 0
+                    compteur = 0
+                    waiting = 4
+                    
+                    pwm_left_controller.run(0)
+                    pwm_right_controller.run(0)
+                    lastSaved = None
+                else:
+                    compteur += 1
+        else:
+            waiting -= 1
         """
         if lastElement[0] == 0:
             "stop"
